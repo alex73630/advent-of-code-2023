@@ -24,4 +24,4 @@ make create day=1
 
 | Day(s) | Link |
 | ------ | ---- |
-| 1-5 | [VOD (to be updated)](https://www.twitch.tv/alex73630) |
+| 1 | [VOD](https://www.twitch.tv/videos/1996615178) |
