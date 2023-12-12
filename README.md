@@ -25,3 +25,4 @@ make create day=1
 | Day(s) | Link |
 | ------ | ---- |
 | 1 | [VOD](https://www.twitch.tv/videos/1996615178) |
+| 2 | No VODs (finished offline on a train) |

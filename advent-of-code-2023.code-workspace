@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "day-2",
+			"path": "day-2"
+		},
+		{
+			"name": "day-1",
+			"path": "day-1"
+		}
+	],
+	"settings": {
+		"jest.disabledWorkspaceFolders": [
+			"advent-of-code-2023"
+		]
+	}
+}
