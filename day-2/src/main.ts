@@ -10,17 +10,20 @@ interface IGame {
 	id: number
 	valid?: boolean
 	rounds: Round[]
+	minCubes?: Round
 }
 
 export class Game implements IGame {
 	id: number
 	valid?: boolean
 	rounds: Round[]
+	minCubes?: Round
 
 	constructor(game: IGame) {
 		this.id = game.id
 		this.valid = game.valid
 		this.rounds = game.rounds
+		this.minCubes = game.minCubes
 	}
 }
 
@@ -63,9 +66,21 @@ export function gameLineParser(input: string): Game | null {
 			}
 		})
 
+		const minCubes = rounds.reduce(
+			(acc, round) => {
+				return {
+					red: Math.max(acc.red, round.red),
+					blue: Math.max(acc.blue, round.blue),
+					green: Math.max(acc.green, round.green)
+				}
+			},
+			{ red: 0, blue: 0, green: 0 }
+		)
+
 		return new Game({
 			id: Number(gameId),
-			rounds
+			rounds,
+			minCubes
 		})
 	} catch (error) {
 		console.warn(`Failed to parse game line: ${input}`)
@@ -92,6 +107,16 @@ export function computeValidGamesIdSum(games: Game[]): number {
 	return games.filter((game) => game.valid).reduce((acc, game) => acc + game.id, 0)
 }
 
+export function computeCubeSetPower(game: Game): number {
+	if (!game.minCubes) return 0
+
+	return game.minCubes.red * game.minCubes.blue * game.minCubes.green
+}
+
+export function computeGamesCubeSetPowerSum(games: Game[]): number {
+	return games.reduce((acc, game) => acc + computeCubeSetPower(game), 0)
+}
+
 export async function loadInputLines(filename: string): Promise<string[]> {
 	const file = await readFile(path.join(__EsDirname, "../input/", filename), "utf-8")
 
@@ -115,14 +140,14 @@ export async function main() {
 
 	const sum = computeValidGamesIdSum(verifiedGames)
 
-	console.log(verifiedGames.length)
-
 	console.dir(
-		verifiedGames.map(({ id, valid, rounds }) => ({ id, valid, rounds: rounds.length })),
+		verifiedGames.map(({ id, valid, minCubes }) => ({ id, valid, minCubes })),
 		{ depth: 10 }
 	)
 
-	console.log(sum)
+	const power = computeGamesCubeSetPowerSum(games)
+
+	console.log(sum, power)
 
 	return
 }
