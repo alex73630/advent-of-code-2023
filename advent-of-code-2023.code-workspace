@@ -10,6 +10,9 @@
 		{
 			"name": "day-1",
 			"path": "day-1"
+		},
+		{
+			"path": "day-3"
 		}
 	],
 	"settings": {
